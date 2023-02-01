@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Modules - godot-luau-script Documentation</title>
+        <title>Quirks - godot-luau-script Documentation</title>
 
 
         <!-- Custom HTML head -->
@@ -80,7 +80,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item affix "><a href="../../introduction.html">Introduction</a></li><li class="chapter-item affix "><li class="part-title">Usage</li><li class="chapter-item "><a href="../../usage/building-and-installation.html"><strong aria-hidden="true">1.</strong> Building and Installation</a></li><li class="chapter-item expanded "><a href="../../usage/writing-scripts/index.html"><strong aria-hidden="true">2.</strong> Writing Scripts</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../usage/writing-scripts/accessing-godot.html"><strong aria-hidden="true">2.1.</strong> Accessing Godot APIs</a></li><li class="chapter-item "><div><strong aria-hidden="true">2.2.</strong> Godot Class Reference</div></li><li class="chapter-item "><a href="../../usage/writing-scripts/luau-script-api.html"><strong aria-hidden="true">2.3.</strong> godot-luau-script API Reference</a></li><li class="chapter-item "><a href="../../usage/writing-scripts/idiomatic-class.html"><strong aria-hidden="true">2.4.</strong> The "Idiomatic" Class</a></li><li class="chapter-item "><a href="../../usage/writing-scripts/core-scripts-vms-permissions.html"><strong aria-hidden="true">2.5.</strong> "Core Scripts", VMs, and Permissions</a></li><li class="chapter-item expanded "><a href="../../usage/writing-scripts/modules.html" class="active"><strong aria-hidden="true">2.6.</strong> Modules</a></li><li class="chapter-item "><a href="../../usage/writing-scripts/task-scheduler.html"><strong aria-hidden="true">2.7.</strong> The Task Scheduler</a></li><li class="chapter-item "><a href="../../usage/writing-scripts/typechecking-autocomplete.html"><strong aria-hidden="true">2.8.</strong> Typechecking and Autocomplete</a></li><li class="chapter-item "><a href="../../usage/writing-scripts/quirks.html"><strong aria-hidden="true">2.9.</strong> Quirks</a></li></ol></li><li class="chapter-item "><a href="../../usage/known-issues.html"><strong aria-hidden="true">3.</strong> Known Issues</a></li><li class="chapter-item affix "><li class="part-title">Development</li><li class="chapter-item "><a href="../../development/tests.html"><strong aria-hidden="true">4.</strong> Tests</a></li><li class="chapter-item "><a href="../../development/debugging.html"><strong aria-hidden="true">5.</strong> Debugging</a></li></ol>
+                <ol class="chapter"><li class="chapter-item affix "><a href="../../introduction.html">Introduction</a></li><li class="chapter-item affix "><li class="part-title">Usage</li><li class="chapter-item "><a href="../../usage/building-and-installation.html"><strong aria-hidden="true">1.</strong> Building and Installation</a></li><li class="chapter-item expanded "><a href="../../usage/writing-scripts/index.html"><strong aria-hidden="true">2.</strong> Writing Scripts</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../usage/writing-scripts/accessing-godot.html"><strong aria-hidden="true">2.1.</strong> Accessing Godot APIs</a></li><li class="chapter-item "><div><strong aria-hidden="true">2.2.</strong> Godot Class Reference</div></li><li class="chapter-item "><a href="../../usage/writing-scripts/luau-script-api.html"><strong aria-hidden="true">2.3.</strong> godot-luau-script API Reference</a></li><li class="chapter-item "><a href="../../usage/writing-scripts/idiomatic-class.html"><strong aria-hidden="true">2.4.</strong> The "Idiomatic" Class</a></li><li class="chapter-item "><a href="../../usage/writing-scripts/core-scripts-vms-permissions.html"><strong aria-hidden="true">2.5.</strong> "Core Scripts", VMs, and Permissions</a></li><li class="chapter-item "><a href="../../usage/writing-scripts/modules.html"><strong aria-hidden="true">2.6.</strong> Modules</a></li><li class="chapter-item "><a href="../../usage/writing-scripts/task-scheduler.html"><strong aria-hidden="true">2.7.</strong> The Task Scheduler</a></li><li class="chapter-item "><a href="../../usage/writing-scripts/typechecking-autocomplete.html"><strong aria-hidden="true">2.8.</strong> Typechecking and Autocomplete</a></li><li class="chapter-item expanded "><a href="../../usage/writing-scripts/quirks.html" class="active"><strong aria-hidden="true">2.9.</strong> Quirks</a></li></ol></li><li class="chapter-item "><a href="../../usage/known-issues.html"><strong aria-hidden="true">3.</strong> Known Issues</a></li><li class="chapter-item affix "><li class="part-title">Development</li><li class="chapter-item "><a href="../../development/tests.html"><strong aria-hidden="true">4.</strong> Tests</a></li><li class="chapter-item "><a href="../../development/debugging.html"><strong aria-hidden="true">5.</strong> Debugging</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -141,29 +141,26 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="modules"><a class="header" href="#modules">Modules</a></h1>
-<p><code>godot-luau-script</code> supports non-class module scripts and the <code>require</code> function.</p>
-<h2 id="require"><a class="header" href="#require"><code>require</code></a></h2>
-<p>The <code>require</code> function accepts a path relative to the <em>project root</em>, without the <code>.lua</code> extension.
-It will load the file at the given path and return whatever the file returned.</p>
-<p>Requires are cached within the same Lua VM, and are reloaded when necessary (if the script changes).</p>
-<p>Please note that cyclic requires are not supported and may cause odd behavior in the editor if encountered.
-Cyclic requires may also be caused by a base class requiring a script that inherits it.</p>
-<h2 id="module-scripts"><a class="header" href="#module-scripts">Module scripts</a></h2>
-<p><code>require</code> can require a script (class) file, in which case it will return the <code>GDClassDefinition</code> of the class.</p>
-<p>However, you may want to create your own Lua types which don't need to be accessible to Godot.
-To do this in a dedicated file, create a file with the extension <code>.mod.lua</code> which returns a function or a table.</p>
-<p>Then, you will be able to require this file (being sure to include the <code>.mod</code> but not the <code>.lua</code> in the require path).</p>
+                        <h1 id="quirks"><a class="header" href="#quirks">Quirks</a></h1>
+<p>There are some odd/unexpected quirks with the way <code>godot-luau-script</code> works, usually due to the way it's structured.</p>
+<h2 id="methods-and-yielding"><a class="header" href="#methods-and-yielding">Methods and yielding</a></h2>
+<p>Calling a class method which yields using the <code>:</code> operator will error
+because <code>godot-luau-script</code> uses a C++-defined <code>__namecall</code> function which calls the class method from C++.
+This issue is difficult to avoid because <code>__namecall</code> is the most optimized method calling route (especially vs. a <code>__index</code> function).</p>
+<p>In order to call a class method which yields, you will need to call it &quot;from Lua&quot;, meaning you need to call it as a regular Lua function.
+Typically, this should be done by indexing the class definition.
+For example, for a method <code>YieldingMethod</code> in class <code>MyClass</code>, you should call the method through <code>MyClass.YieldingMethod(myClassInstance)</code> rather than
+<code>myClassInstance:YieldingMethod()</code>.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../../usage/writing-scripts/core-scripts-vms-permissions.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../../usage/writing-scripts/typechecking-autocomplete.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next" href="../../usage/writing-scripts/task-scheduler.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="../../usage/known-issues.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -173,11 +170,11 @@ To do this in a dedicated file, create a file with the extension <code>.mod.lua<
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../../usage/writing-scripts/core-scripts-vms-permissions.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../../usage/writing-scripts/typechecking-autocomplete.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next" href="../../usage/writing-scripts/task-scheduler.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="../../usage/known-issues.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
