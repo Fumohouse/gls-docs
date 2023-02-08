@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>The &quot;Idiomatic&quot; Class - godot-luau-script Documentation</title>
+        <title>Virtual Methods - godot-luau-script Documentation</title>
 
 
         <!-- Custom HTML head -->
@@ -80,7 +80,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item affix "><a href="../../introduction.html">Introduction</a></li><li class="chapter-item affix "><li class="part-title">Usage</li><li class="chapter-item "><a href="../../usage/building-and-installation.html"><strong aria-hidden="true">1.</strong> Building and Installation</a></li><li class="chapter-item expanded "><a href="../../usage/writing-scripts/index.html"><strong aria-hidden="true">2.</strong> Writing Scripts</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../usage/writing-scripts/accessing-godot.html"><strong aria-hidden="true">2.1.</strong> Accessing Godot APIs</a></li><li class="chapter-item "><div><strong aria-hidden="true">2.2.</strong> Godot Class Reference</div></li><li class="chapter-item "><a href="../../usage/writing-scripts/luau-script-api.html"><strong aria-hidden="true">2.3.</strong> godot-luau-script API Reference</a></li><li class="chapter-item expanded "><a href="../../usage/writing-scripts/idiomatic-class.html" class="active"><strong aria-hidden="true">2.4.</strong> The "Idiomatic" Class</a></li><li class="chapter-item "><a href="../../usage/writing-scripts/virtual-methods.html"><strong aria-hidden="true">2.5.</strong> Virtual Methods</a></li><li class="chapter-item "><a href="../../usage/writing-scripts/core-scripts-vms-permissions.html"><strong aria-hidden="true">2.6.</strong> "Core Scripts", VMs, and Permissions</a></li><li class="chapter-item "><a href="../../usage/writing-scripts/modules.html"><strong aria-hidden="true">2.7.</strong> Modules</a></li><li class="chapter-item "><a href="../../usage/writing-scripts/task-scheduler.html"><strong aria-hidden="true">2.8.</strong> The Task Scheduler</a></li><li class="chapter-item "><a href="../../usage/writing-scripts/typechecking-autocomplete.html"><strong aria-hidden="true">2.9.</strong> Typechecking and Autocomplete</a></li><li class="chapter-item "><a href="../../usage/writing-scripts/quirks.html"><strong aria-hidden="true">2.10.</strong> Quirks</a></li></ol></li><li class="chapter-item "><a href="../../usage/known-issues.html"><strong aria-hidden="true">3.</strong> Known Issues</a></li><li class="chapter-item affix "><li class="part-title">Development</li><li class="chapter-item "><a href="../../development/tests.html"><strong aria-hidden="true">4.</strong> Tests</a></li><li class="chapter-item "><a href="../../development/debugging.html"><strong aria-hidden="true">5.</strong> Debugging</a></li></ol>
+                <ol class="chapter"><li class="chapter-item affix "><a href="../../introduction.html">Introduction</a></li><li class="chapter-item affix "><li class="part-title">Usage</li><li class="chapter-item "><a href="../../usage/building-and-installation.html"><strong aria-hidden="true">1.</strong> Building and Installation</a></li><li class="chapter-item expanded "><a href="../../usage/writing-scripts/index.html"><strong aria-hidden="true">2.</strong> Writing Scripts</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../usage/writing-scripts/accessing-godot.html"><strong aria-hidden="true">2.1.</strong> Accessing Godot APIs</a></li><li class="chapter-item "><div><strong aria-hidden="true">2.2.</strong> Godot Class Reference</div></li><li class="chapter-item "><a href="../../usage/writing-scripts/luau-script-api.html"><strong aria-hidden="true">2.3.</strong> godot-luau-script API Reference</a></li><li class="chapter-item "><a href="../../usage/writing-scripts/idiomatic-class.html"><strong aria-hidden="true">2.4.</strong> The "Idiomatic" Class</a></li><li class="chapter-item expanded "><a href="../../usage/writing-scripts/virtual-methods.html" class="active"><strong aria-hidden="true">2.5.</strong> Virtual Methods</a></li><li class="chapter-item "><a href="../../usage/writing-scripts/core-scripts-vms-permissions.html"><strong aria-hidden="true">2.6.</strong> "Core Scripts", VMs, and Permissions</a></li><li class="chapter-item "><a href="../../usage/writing-scripts/modules.html"><strong aria-hidden="true">2.7.</strong> Modules</a></li><li class="chapter-item "><a href="../../usage/writing-scripts/task-scheduler.html"><strong aria-hidden="true">2.8.</strong> The Task Scheduler</a></li><li class="chapter-item "><a href="../../usage/writing-scripts/typechecking-autocomplete.html"><strong aria-hidden="true">2.9.</strong> Typechecking and Autocomplete</a></li><li class="chapter-item "><a href="../../usage/writing-scripts/quirks.html"><strong aria-hidden="true">2.10.</strong> Quirks</a></li></ol></li><li class="chapter-item "><a href="../../usage/known-issues.html"><strong aria-hidden="true">3.</strong> Known Issues</a></li><li class="chapter-item affix "><li class="part-title">Development</li><li class="chapter-item "><a href="../../development/tests.html"><strong aria-hidden="true">4.</strong> Tests</a></li><li class="chapter-item "><a href="../../development/debugging.html"><strong aria-hidden="true">5.</strong> Debugging</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -141,68 +141,50 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="the-idiomatic-class"><a class="header" href="#the-idiomatic-class">The &quot;Idiomatic&quot; Class</a></h1>
-<p>As this project is still in early stages, you shouldn't consider this syntax/interface stable yet.</p>
-<p>At any rate, the following class provides an example as to what is currently considered &quot;idiomatic&quot; and type checkable:</p>
-<pre><code class="language-lua">--!strict
-local MyClassImpl = {}
-local MyClass = gdclass(&quot;MyClass&quot;, &quot;Resource&quot;)
-    :RegisterImpl(MyClassImpl)
-
--- These items registered on the impl will be accessible by indexing `MyClass`,
--- making them accessible to other scripts if they `require` this one.
-MyClassImpl.TestEnum = {
-    ONE = 1,
-    TWO = 2,
-    THREE = 3,
-}
-
-MyClassImpl.TEST_CONSTANT = &quot;hello!&quot;
-
--- Includes any custom fields/properties (essentially anything except methods)
-type MyClassT = {
-    testProperty: number,
-}
-
-export type MyClass = Resource &amp; MyClassT &amp; typeof(MyClassImpl)
-
--- Register a property to be accessible in the editor
-MyClass:RegisterProperty(&quot;testProperty&quot;, Enum.VariantType.FLOAT)
-    :Range(0, 1, 0.1)
-    :Default(0.5)
-
-function MyClassImpl.TestMethodAST(self: MyClass, arg1: number, arg2: TypedArray&lt;Resource&gt;): Variant
-    return 123
-end
-
--- Register a method to be accessible to Godot, based on its type annotations
-MyClass:RegisterMethodAST(&quot;TestMethodAST&quot;)
-    :DefaultArgs(5, Array.new())
-
-function MyClassImpl.TestMethodManual(self: MyClass, arg1: number, arg2: string): RefCounted
-    return self
-end
-
--- Register a method manually. Not recommended unless the above method fails or you are not using type checking.
-MyClass:RegisterMethod(&quot;TestMethodManual&quot;)
-    :Args(
-        { name = &quot;arg1&quot;, type = Enum.VariantType.FLOAT },
-        { name = &quot;arg2&quot;, type = Enum.VariantType.STRING }
-    )
-    :ReturnVal({ type = Enum.VariantType.OBJECT })
-
-return MyClass
-</code></pre>
+                        <h1 id="virtual-methods"><a class="header" href="#virtual-methods">Virtual Methods</a></h1>
+<p><code>godot-luau-script</code> supports the overriding of virtual methods.</p>
+<h2 id="defined-in-an-object-class"><a class="header" href="#defined-in-an-object-class">Defined in an <code>Object</code> class</a></h2>
+<p>If a virtual method such as <code>_process</code> or <code>_ready</code> is defined on an <code>Object</code>-type class,
+you can override it by defining it in your implementation table and registering it to Godot.</p>
+<h2 id="built-in-to-godot-luau-script"><a class="header" href="#built-in-to-godot-luau-script">Built in to <code>godot-luau-script</code></a></h2>
+<p>This project comes with a number of built-in virtual methods, which can be overridden just by defining them on your implementation table.
+They do not need to be registered to Godot.</p>
+<h3 id="function-_initobj-object-table-"><a class="header" href="#function-_initobj-object-table-"><code>function _Init(obj: Object, table): ()</code></a></h3>
+<p><code>_Init</code> is called as soon as an <code>Object</code> with your script is instantiated.</p>
+<p>At this time, you gain access to the underlying table for your script instance,
+where you can set a metatable on it or initialize any fields that do not need to be registered to Godot as a property.</p>
+<h3 id="function-_notificationself-what-number-"><a class="header" href="#function-_notificationself-what-number-"><code>function _Notification(self, what: number): ()</code></a></h3>
+<p><code>_Notification</code> is called whenever your object receives a notification.
+Refer to Godot documentation to see what notifications you may receive.</p>
+<h3 id="function-_tostringself-string"><a class="header" href="#function-_tostringself-string"><code>function _ToString(self): string</code></a></h3>
+<p><code>_ToString</code> is called whenever Godot wants to stringify your object, for example when printing your object or calling <code>tostring</code>.
+It should return the string representation of your object.</p>
+<h3 id="custom-property-methods"><a class="header" href="#custom-property-methods">Custom property methods</a></h3>
+<p>These methods should be used in combination to define custom properties for your object, typically so they can show up in the editor.
+Keep in mind you must set <code>:Tool(true)</code> on your class for these methods to run in the editor.</p>
+<h4 id="function-_getpropertylistself-gdproperty"><a class="header" href="#function-_getpropertylistself-gdproperty"><code>function _GetPropertyList(self): {GDProperty}</code></a></h4>
+<p>This function should return a list of additional properties to be registered to Godot.</p>
+<h4 id="function-_setself-name-string-value-variant-boolean"><a class="header" href="#function-_setself-name-string-value-variant-boolean"><code>function _Set(self, name: string, value: Variant): boolean</code></a></h4>
+<p>This function should handle setting a value for a custom property.
+It should return <code>true</code> when it set the value successfully, and <code>false</code> when it did not (or when the property doesn't exist).</p>
+<h4 id="function-_getself-name-string-variant"><a class="header" href="#function-_getself-name-string-variant"><code>function _Get(self, name: string): Variant</code></a></h4>
+<p>This function should handle getting a value for a custom property.
+It should return the value of the property or <code>nil</code> if the property doesn't exist.</p>
+<h4 id="function-_propertycanrevertself-name-string-boolean"><a class="header" href="#function-_propertycanrevertself-name-string-boolean"><code>function _PropertyCanRevert(self, name: string): boolean</code></a></h4>
+<p>This function should return <code>true</code> if the given property has a default value which the editor should be able to revert to.</p>
+<h4 id="function-_propertygetrevertself-name-string-variant"><a class="header" href="#function-_propertygetrevertself-name-string-variant"><code>function _PropertyGetRevert(self, name: string): Variant</code></a></h4>
+<p>This function should be overridden along with <code>_PropertyCanRevert</code>.
+It should return the default value of the given property, or <code>nil</code> if it doesn't exist.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../../usage/writing-scripts/luau-script-api.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../../usage/writing-scripts/idiomatic-class.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next" href="../../usage/writing-scripts/virtual-methods.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="../../usage/writing-scripts/core-scripts-vms-permissions.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -212,11 +194,11 @@ return MyClass
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../../usage/writing-scripts/luau-script-api.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../../usage/writing-scripts/idiomatic-class.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next" href="../../usage/writing-scripts/virtual-methods.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="../../usage/writing-scripts/core-scripts-vms-permissions.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

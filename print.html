@@ -81,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item affix "><a href="introduction.html">Introduction</a></li><li class="chapter-item affix "><li class="part-title">Usage</li><li class="chapter-item "><a href="usage/building-and-installation.html"><strong aria-hidden="true">1.</strong> Building and Installation</a></li><li class="chapter-item "><a href="usage/writing-scripts/index.html"><strong aria-hidden="true">2.</strong> Writing Scripts</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="usage/writing-scripts/accessing-godot.html"><strong aria-hidden="true">2.1.</strong> Accessing Godot APIs</a></li><li class="chapter-item "><div><strong aria-hidden="true">2.2.</strong> Godot Class Reference</div></li><li class="chapter-item "><a href="usage/writing-scripts/luau-script-api.html"><strong aria-hidden="true">2.3.</strong> godot-luau-script API Reference</a></li><li class="chapter-item "><a href="usage/writing-scripts/idiomatic-class.html"><strong aria-hidden="true">2.4.</strong> The "Idiomatic" Class</a></li><li class="chapter-item "><a href="usage/writing-scripts/core-scripts-vms-permissions.html"><strong aria-hidden="true">2.5.</strong> "Core Scripts", VMs, and Permissions</a></li><li class="chapter-item "><a href="usage/writing-scripts/modules.html"><strong aria-hidden="true">2.6.</strong> Modules</a></li><li class="chapter-item "><a href="usage/writing-scripts/task-scheduler.html"><strong aria-hidden="true">2.7.</strong> The Task Scheduler</a></li><li class="chapter-item "><a href="usage/writing-scripts/typechecking-autocomplete.html"><strong aria-hidden="true">2.8.</strong> Typechecking and Autocomplete</a></li><li class="chapter-item "><a href="usage/writing-scripts/quirks.html"><strong aria-hidden="true">2.9.</strong> Quirks</a></li></ol></li><li class="chapter-item "><a href="usage/known-issues.html"><strong aria-hidden="true">3.</strong> Known Issues</a></li><li class="chapter-item affix "><li class="part-title">Development</li><li class="chapter-item "><a href="development/tests.html"><strong aria-hidden="true">4.</strong> Tests</a></li><li class="chapter-item "><a href="development/debugging.html"><strong aria-hidden="true">5.</strong> Debugging</a></li></ol>
+                <ol class="chapter"><li class="chapter-item affix "><a href="introduction.html">Introduction</a></li><li class="chapter-item affix "><li class="part-title">Usage</li><li class="chapter-item "><a href="usage/building-and-installation.html"><strong aria-hidden="true">1.</strong> Building and Installation</a></li><li class="chapter-item "><a href="usage/writing-scripts/index.html"><strong aria-hidden="true">2.</strong> Writing Scripts</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="usage/writing-scripts/accessing-godot.html"><strong aria-hidden="true">2.1.</strong> Accessing Godot APIs</a></li><li class="chapter-item "><div><strong aria-hidden="true">2.2.</strong> Godot Class Reference</div></li><li class="chapter-item "><a href="usage/writing-scripts/luau-script-api.html"><strong aria-hidden="true">2.3.</strong> godot-luau-script API Reference</a></li><li class="chapter-item "><a href="usage/writing-scripts/idiomatic-class.html"><strong aria-hidden="true">2.4.</strong> The "Idiomatic" Class</a></li><li class="chapter-item "><a href="usage/writing-scripts/virtual-methods.html"><strong aria-hidden="true">2.5.</strong> Virtual Methods</a></li><li class="chapter-item "><a href="usage/writing-scripts/core-scripts-vms-permissions.html"><strong aria-hidden="true">2.6.</strong> "Core Scripts", VMs, and Permissions</a></li><li class="chapter-item "><a href="usage/writing-scripts/modules.html"><strong aria-hidden="true">2.7.</strong> Modules</a></li><li class="chapter-item "><a href="usage/writing-scripts/task-scheduler.html"><strong aria-hidden="true">2.8.</strong> The Task Scheduler</a></li><li class="chapter-item "><a href="usage/writing-scripts/typechecking-autocomplete.html"><strong aria-hidden="true">2.9.</strong> Typechecking and Autocomplete</a></li><li class="chapter-item "><a href="usage/writing-scripts/quirks.html"><strong aria-hidden="true">2.10.</strong> Quirks</a></li></ol></li><li class="chapter-item "><a href="usage/known-issues.html"><strong aria-hidden="true">3.</strong> Known Issues</a></li><li class="chapter-item affix "><li class="part-title">Development</li><li class="chapter-item "><a href="development/tests.html"><strong aria-hidden="true">4.</strong> Tests</a></li><li class="chapter-item "><a href="development/debugging.html"><strong aria-hidden="true">5.</strong> Debugging</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -322,7 +322,13 @@ declare function NP(str: string): NodePath
     Loads a resource. Mostly an alias for `ResourceLoader.GetSingleton():Load()`.
     @param path The **relative** path to the resource from this script.
 ]]
-declare function load&lt;T&gt;(path: string): T
+declare function load&lt;T&gt;(path: string): T?
+
+--[[--
+    Determines the Godot Variant type of a value, or `nil` if the value is not Variant-compatible.
+    @param value The value.
+]]
+declare function gdtypeof(value: any): EnumVariantType?
 
 --------------------
 -- LUAU_LIB TYPES --
@@ -697,6 +703,40 @@ MyClass:RegisterMethod(&quot;TestMethodManual&quot;)
 
 return MyClass
 </code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="virtual-methods"><a class="header" href="#virtual-methods">Virtual Methods</a></h1>
+<p><code>godot-luau-script</code> supports the overriding of virtual methods.</p>
+<h2 id="defined-in-an-object-class"><a class="header" href="#defined-in-an-object-class">Defined in an <code>Object</code> class</a></h2>
+<p>If a virtual method such as <code>_process</code> or <code>_ready</code> is defined on an <code>Object</code>-type class,
+you can override it by defining it in your implementation table and registering it to Godot.</p>
+<h2 id="built-in-to-godot-luau-script"><a class="header" href="#built-in-to-godot-luau-script">Built in to <code>godot-luau-script</code></a></h2>
+<p>This project comes with a number of built-in virtual methods, which can be overridden just by defining them on your implementation table.
+They do not need to be registered to Godot.</p>
+<h3 id="function-_initobj-object-table-"><a class="header" href="#function-_initobj-object-table-"><code>function _Init(obj: Object, table): ()</code></a></h3>
+<p><code>_Init</code> is called as soon as an <code>Object</code> with your script is instantiated.</p>
+<p>At this time, you gain access to the underlying table for your script instance,
+where you can set a metatable on it or initialize any fields that do not need to be registered to Godot as a property.</p>
+<h3 id="function-_notificationself-what-number-"><a class="header" href="#function-_notificationself-what-number-"><code>function _Notification(self, what: number): ()</code></a></h3>
+<p><code>_Notification</code> is called whenever your object receives a notification.
+Refer to Godot documentation to see what notifications you may receive.</p>
+<h3 id="function-_tostringself-string"><a class="header" href="#function-_tostringself-string"><code>function _ToString(self): string</code></a></h3>
+<p><code>_ToString</code> is called whenever Godot wants to stringify your object, for example when printing your object or calling <code>tostring</code>.
+It should return the string representation of your object.</p>
+<h3 id="custom-property-methods"><a class="header" href="#custom-property-methods">Custom property methods</a></h3>
+<p>These methods should be used in combination to define custom properties for your object, typically so they can show up in the editor.
+Keep in mind you must set <code>:Tool(true)</code> on your class for these methods to run in the editor.</p>
+<h4 id="function-_getpropertylistself-gdproperty"><a class="header" href="#function-_getpropertylistself-gdproperty"><code>function _GetPropertyList(self): {GDProperty}</code></a></h4>
+<p>This function should return a list of additional properties to be registered to Godot.</p>
+<h4 id="function-_setself-name-string-value-variant-boolean"><a class="header" href="#function-_setself-name-string-value-variant-boolean"><code>function _Set(self, name: string, value: Variant): boolean</code></a></h4>
+<p>This function should handle setting a value for a custom property.
+It should return <code>true</code> when it set the value successfully, and <code>false</code> when it did not (or when the property doesn't exist).</p>
+<h4 id="function-_getself-name-string-variant"><a class="header" href="#function-_getself-name-string-variant"><code>function _Get(self, name: string): Variant</code></a></h4>
+<p>This function should handle getting a value for a custom property.
+It should return the value of the property or <code>nil</code> if the property doesn't exist.</p>
+<h4 id="function-_propertycanrevertself-name-string-boolean"><a class="header" href="#function-_propertycanrevertself-name-string-boolean"><code>function _PropertyCanRevert(self, name: string): boolean</code></a></h4>
+<p>This function should return <code>true</code> if the given property has a default value which the editor should be able to revert to.</p>
+<h4 id="function-_propertygetrevertself-name-string-variant"><a class="header" href="#function-_propertygetrevertself-name-string-variant"><code>function _PropertyGetRevert(self, name: string): Variant</code></a></h4>
+<p>This function should be overridden along with <code>_PropertyCanRevert</code>.
+It should return the default value of the given property, or <code>nil</code> if it doesn't exist.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="core-scripts-vms-and-permissions"><a class="header" href="#core-scripts-vms-and-permissions">&quot;Core Scripts&quot;, VMs, and Permissions</a></h1>
 <p>These three concepts are essential to <code>godot-luau-script</code>'s sandboxing and security.</p>
 <h2 id="core-scripts"><a class="header" href="#core-scripts">&quot;Core Scripts&quot;</a></h2>
