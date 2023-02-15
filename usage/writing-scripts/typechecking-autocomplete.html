@@ -148,6 +148,7 @@ As such, the most viable setup is to use Visual Studio Code and the <a href="htt
 <h2 id="setup"><a class="header" href="#setup">Setup</a></h2>
 <p>After installing VSCode and the extension above, you will need to do the following setup:</p>
 <ul>
+<li>Set the preference <code>luau-lsp.require.mode</code> to <code>relativeToFile</code> to make <code>require</code> relative to the current script.</li>
 <li>Set the preference <code>luau-lsp.types.roblox</code> to <code>false</code> to disable Roblox types being loaded by default.</li>
 <li>Set the preference <code>luau-lsp.types.definitionFiles</code> to an array containing the path to <code>definitions/luauScriptTypes.gen.d.lua</code>.</li>
 <li>Set the FFlag <code>LuauRecursionLimit</code> to something higher than the default (e.g. 5000). This can be done through the <code>luau-lsp.fflags.override</code> preference.

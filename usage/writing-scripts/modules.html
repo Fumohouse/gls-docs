@@ -144,7 +144,7 @@
                         <h1 id="modules"><a class="header" href="#modules">Modules</a></h1>
 <p><code>godot-luau-script</code> supports non-class module scripts and the <code>require</code> function.</p>
 <h2 id="require"><a class="header" href="#require"><code>require</code></a></h2>
-<p>The <code>require</code> function accepts a path relative to the <em>project root</em>, without the <code>.lua</code> extension.
+<p>The <code>require</code> function accepts a path relative to the current script, without the <code>.lua</code> extension.
 It will load the file at the given path and return whatever the file returned.</p>
 <p>Requires are cached within the same Lua VM, and are reloaded when necessary (if the script changes).</p>
 <p>Please note that cyclic requires are not supported and may cause odd behavior in the editor if encountered.

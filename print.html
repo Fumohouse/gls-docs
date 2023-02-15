@@ -651,6 +651,12 @@ declare function gdclass(name: string?, extends: string?): GDClassDefinition
     @param duration The duration to wait. If the engine is affected by a time factor, this duration will be affected by it.
 ]]
 declare function wait(duration: number): number
+
+--[[--
+    Gets a global constant (e.g. AutoLoad) which was defined in the Godot editor.
+    @param name The name of the global constant.
+]]
+declare function gdglobal(name: string | StringName): Variant
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="the-idiomatic-class"><a class="header" href="#the-idiomatic-class">The &quot;Idiomatic&quot; Class</a></h1>
 <p>As this project is still in early stages, you shouldn't consider this syntax/interface stable yet.</p>
@@ -767,7 +773,7 @@ If a thread ever tries to execute a method or other code of a permission level i
 <div style="break-before: page; page-break-before: always;"></div><h1 id="modules"><a class="header" href="#modules">Modules</a></h1>
 <p><code>godot-luau-script</code> supports non-class module scripts and the <code>require</code> function.</p>
 <h2 id="require"><a class="header" href="#require"><code>require</code></a></h2>
-<p>The <code>require</code> function accepts a path relative to the <em>project root</em>, without the <code>.lua</code> extension.
+<p>The <code>require</code> function accepts a path relative to the current script, without the <code>.lua</code> extension.
 It will load the file at the given path and return whatever the file returned.</p>
 <p>Requires are cached within the same Lua VM, and are reloaded when necessary (if the script changes).</p>
 <p>Please note that cyclic requires are not supported and may cause odd behavior in the editor if encountered.
@@ -788,6 +794,7 @@ As such, the most viable setup is to use Visual Studio Code and the <a href="htt
 <h2 id="setup"><a class="header" href="#setup">Setup</a></h2>
 <p>After installing VSCode and the extension above, you will need to do the following setup:</p>
 <ul>
+<li>Set the preference <code>luau-lsp.require.mode</code> to <code>relativeToFile</code> to make <code>require</code> relative to the current script.</li>
 <li>Set the preference <code>luau-lsp.types.roblox</code> to <code>false</code> to disable Roblox types being loaded by default.</li>
 <li>Set the preference <code>luau-lsp.types.definitionFiles</code> to an array containing the path to <code>definitions/luauScriptTypes.gen.d.lua</code>.</li>
 <li>Set the FFlag <code>LuauRecursionLimit</code> to something higher than the default (e.g. 5000). This can be done through the <code>luau-lsp.fflags.override</code> preference.
@@ -812,8 +819,6 @@ For example, for a method <code>YieldingMethod</code> in class <code>MyClass</co
 As such, you may experience significant issues when using all of these things together.</p>
 <h2 id="upstream-issue-godot-segfaults-on-exit"><a class="header" href="#upstream-issue-godot-segfaults-on-exit">Upstream issue: Godot segfaults on exit</a></h2>
 <p>Tracking <a href="https://github.com/godotengine/godot-cpp/issues/889">godot-cpp#889</a>.</p>
-<h2 id="upstream-issue-godot-segfaults-on-exit-2"><a class="header" href="#upstream-issue-godot-segfaults-on-exit-2">Upstream issue: Godot segfaults on exit (2)</a></h2>
-<p>Tracking <a href="https://github.com/godotengine/godot/issues/66475">godot#66475</a> and <a href="https://github.com/godotengine/godot/pull/67155">godot#67155</a>.</p>
 <h2 id="upstream-issue-godot-crashes-when-loading-a-project-for-the-first-time"><a class="header" href="#upstream-issue-godot-crashes-when-loading-a-project-for-the-first-time">Upstream issue: Godot crashes when loading a project for the first time</a></h2>
 <p>This likely occurs because the <code>ScriptLanguage</code> is used before initialization when the extension is loaded for the first time
 (or, that it is used during asset reimport somehow).</p>
