@@ -146,7 +146,7 @@
 <p>At any rate, the following class provides an example as to what is currently considered &quot;idiomatic&quot; and type checkable:</p>
 <pre><code class="language-lua">--!strict
 local MyClassImpl = {}
-local MyClass = gdclass(&quot;MyClass&quot;, &quot;Resource&quot;)
+local MyClass = gdclass(&quot;MyClass&quot;, Resource)
     :RegisterImpl(MyClassImpl)
 
 -- These items registered on the impl will be accessible by indexing `MyClass`,
