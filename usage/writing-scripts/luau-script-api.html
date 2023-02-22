@@ -493,11 +493,6 @@ declare class GDClassDefinition
     -- METAMETHODS --
 
     --[[--
-        Sets a value on the implementation table, creating one if it has not been registered through @see GDClassDefinition.RegisterImpl yet.
-    ]]
-    function __newindex(self, key: string, value: any)
-
-    --[[--
         Gets a value on the implementation table, erroring if one has not been created.
     ]]
     function __index(self, key: string): any
@@ -515,6 +510,13 @@ declare function gdclass(name: string?, extends: GDClassDefinition | ClassGlobal
     @param duration The duration to wait. If the engine is affected by a time factor, this duration will be affected by it.
 ]]
 declare function wait(duration: number): number
+
+--[[--
+    Yields the current thread and waits for the signal to be emitted before resuming.
+    @param signal The signal.
+    @return Arguments passed to the signal when it was emitted.
+]]
+declare function wait_signal&lt;T...&gt;(signal: Signal): T...
 
 --[[--
     Gets a global constant (e.g. AutoLoad) which was defined in the Godot editor.
