@@ -809,8 +809,6 @@ As such, the most viable setup is to use Visual Studio Code and the <a href="htt
 <div style="break-before: page; page-break-before: always;"></div><h1 id="known-issues"><a class="header" href="#known-issues">Known Issues</a></h1>
 <p><code>godot-luau-script</code>, godot-cpp, Godot's GDExtension script language interface, and Godot 4 itself are all unstable.
 As such, you may experience significant issues when using all of these things together.</p>
-<h2 id="upstream-issue-godot-segfaults-on-exit"><a class="header" href="#upstream-issue-godot-segfaults-on-exit">Upstream issue: Godot segfaults on exit</a></h2>
-<p>Tracking <a href="https://github.com/godotengine/godot-cpp/issues/889">godot-cpp#889</a>.</p>
 <h2 id="upstream-issue-godot-crashes-when-loading-a-project-for-the-first-time"><a class="header" href="#upstream-issue-godot-crashes-when-loading-a-project-for-the-first-time">Upstream issue: Godot crashes when loading a project for the first time</a></h2>
 <p>This likely occurs because the <code>ScriptLanguage</code> is used before initialization when the extension is loaded for the first time
 (or, that it is used during asset reimport somehow).</p>
