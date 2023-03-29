@@ -149,10 +149,10 @@ you can override it by defining it in your implementation table and registering 
 <h2 id="built-in-to-godot-luau-script"><a class="header" href="#built-in-to-godot-luau-script">Built in to <code>godot-luau-script</code></a></h2>
 <p>This project comes with a number of built-in virtual methods, which can be overridden just by defining them on your implementation table.
 They do not need to be registered to Godot.</p>
-<h3 id="function-_initobj-object-table-"><a class="header" href="#function-_initobj-object-table-"><code>function _Init(obj: Object, table): ()</code></a></h3>
+<h3 id="function-_initself-"><a class="header" href="#function-_initself-"><code>function _Init(self): ()</code></a></h3>
 <p><code>_Init</code> is called as soon as an <code>Object</code> with your script is instantiated.</p>
-<p>At this time, you gain access to the underlying table for your script instance,
-where you can set a metatable on it or initialize any fields that do not need to be registered to Godot as a property.</p>
+<p>At this time, you can initialize any values on the object or the underlying table.
+Note that the virtual <code>_Ready</code> on <code>Node</code> may be equally or more appropriate in many cases.</p>
 <h3 id="function-_notificationself-what-number-"><a class="header" href="#function-_notificationself-what-number-"><code>function _Notification(self, what: number): ()</code></a></h3>
 <p><code>_Notification</code> is called whenever your object receives a notification.
 Refer to Godot documentation to see what notifications you may receive.</p>

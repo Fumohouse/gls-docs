@@ -174,7 +174,7 @@ Additionally, if an enum name begins with a number after renaming (e.g. <code>KE
 <div class="table-wrapper"><table><thead><tr><th>Type</th><th>Godot Access</th><th>Luau Access</th><th>GDScript Example</th><th>Luau Example</th></tr></thead><tbody>
 <tr><td>Variant constructors</td><td><code>&lt;ClassName&gt;</code></td><td><code>&lt;ClassName&gt;.new</code></td><td><code>Vector3(0, 1, 0)</code></td><td><code>Vector3.new(0, 1, 0)</code></td></tr>
 <tr><td>Object constructors</td><td><code>&lt;ClassName&gt;.new</code></td><td><em>unchanged</em></td><td><code>AESContext.new()</code></td><td><em>unchanged</em></td></tr>
-<tr><td>Object singleton</td><td><code>&lt;ClassName&gt;</code></td><td><code>&lt;ClassName&gt;.GetSingleton()</code></td><td></td><td></td></tr>
+<tr><td>Object singleton</td><td><code>&lt;ClassName&gt;</code></td><td><code>&lt;ClassName&gt;.singleton</code></td><td></td><td></td></tr>
 <tr><td>Static methods</td><td><code>&lt;ClassName&gt;.&lt;Method&gt;</code></td><td><em>unchanged</em></td><td><code>Vector2.from_angle(x)</code></td><td><code>Vector2.FromAngle(x)</code></td></tr>
 <tr><td>Instance methods static call</td><td><em>N/A</em></td><td><code>&lt;ClassName&gt;.&lt;Method&gt;</code></td><td><em>N/A</em></td><td><code>Vector2.Dot(v1, v2)</code></td></tr>
 <tr><td>Instance methods</td><td><code>&lt;Instance&gt;.&lt;Method&gt;</code></td><td><code>&lt;Instance&gt;:&lt;Method&gt;</code></td><td><code>v1.dot(v2)</code></td><td><code>v1:Dot(v2)</code></td></tr>
