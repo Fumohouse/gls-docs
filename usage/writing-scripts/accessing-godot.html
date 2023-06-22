@@ -80,7 +80,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item affix "><a href="../../introduction.html">Introduction</a></li><li class="chapter-item affix "><li class="part-title">Usage</li><li class="chapter-item "><a href="../../usage/building-and-installation.html"><strong aria-hidden="true">1.</strong> Building and Installation</a></li><li class="chapter-item expanded "><a href="../../usage/writing-scripts/index.html"><strong aria-hidden="true">2.</strong> Writing Scripts</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../usage/writing-scripts/accessing-godot.html" class="active"><strong aria-hidden="true">2.1.</strong> Accessing Godot APIs</a></li><li class="chapter-item "><div><strong aria-hidden="true">2.2.</strong> Godot Class Reference</div></li><li class="chapter-item "><a href="../../usage/writing-scripts/luau-script-api.html"><strong aria-hidden="true">2.3.</strong> godot-luau-script API Reference</a></li><li class="chapter-item "><a href="../../usage/writing-scripts/idiomatic-class.html"><strong aria-hidden="true">2.4.</strong> The "Idiomatic" Class</a></li><li class="chapter-item "><a href="../../usage/writing-scripts/virtual-methods.html"><strong aria-hidden="true">2.5.</strong> Virtual Methods</a></li><li class="chapter-item "><a href="../../usage/writing-scripts/core-scripts-vms-permissions.html"><strong aria-hidden="true">2.6.</strong> "Core Scripts", VMs, and Permissions</a></li><li class="chapter-item "><a href="../../usage/writing-scripts/modules.html"><strong aria-hidden="true">2.7.</strong> Modules</a></li><li class="chapter-item "><a href="../../usage/writing-scripts/task-scheduler.html"><strong aria-hidden="true">2.8.</strong> The Task Scheduler</a></li><li class="chapter-item "><a href="../../usage/writing-scripts/typechecking-autocomplete.html"><strong aria-hidden="true">2.9.</strong> Typechecking and Autocomplete</a></li></ol></li><li class="chapter-item "><a href="../../usage/known-issues.html"><strong aria-hidden="true">3.</strong> Known Issues</a></li><li class="chapter-item affix "><li class="part-title">Development</li><li class="chapter-item "><a href="../../development/tests.html"><strong aria-hidden="true">4.</strong> Tests</a></li><li class="chapter-item "><a href="../../development/debugging.html"><strong aria-hidden="true">5.</strong> Debugging</a></li></ol>
+                <ol class="chapter"><li class="chapter-item affix "><a href="../../introduction.html">Introduction</a></li><li class="chapter-item affix "><li class="part-title">Usage</li><li class="chapter-item "><a href="../../usage/building-and-installation.html"><strong aria-hidden="true">1.</strong> Building and Installation</a></li><li class="chapter-item expanded "><a href="../../usage/writing-scripts/index.html"><strong aria-hidden="true">2.</strong> Writing Scripts</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../usage/writing-scripts/accessing-godot.html" class="active"><strong aria-hidden="true">2.1.</strong> Accessing Godot APIs</a></li><li class="chapter-item "><a href="../../usage/writing-scripts/class-registration.html"><strong aria-hidden="true">2.2.</strong> Class Registration</a></li><li class="chapter-item "><div><strong aria-hidden="true">2.3.</strong> Godot Class Reference</div></li><li class="chapter-item "><a href="../../usage/writing-scripts/luau-script-api.html"><strong aria-hidden="true">2.4.</strong> godot-luau-script API Reference</a></li><li class="chapter-item "><a href="../../usage/writing-scripts/idiomatic-class.html"><strong aria-hidden="true">2.5.</strong> The "Idiomatic" Class</a></li><li class="chapter-item "><a href="../../usage/writing-scripts/virtual-methods.html"><strong aria-hidden="true">2.6.</strong> Virtual Methods</a></li><li class="chapter-item "><a href="../../usage/writing-scripts/core-scripts-vms-permissions.html"><strong aria-hidden="true">2.7.</strong> "Core Scripts", VMs, and Permissions</a></li><li class="chapter-item "><a href="../../usage/writing-scripts/modules.html"><strong aria-hidden="true">2.8.</strong> Modules</a></li><li class="chapter-item "><a href="../../usage/writing-scripts/task-scheduler.html"><strong aria-hidden="true">2.9.</strong> The Task Scheduler</a></li><li class="chapter-item "><a href="../../usage/writing-scripts/typechecking-autocomplete.html"><strong aria-hidden="true">2.10.</strong> Typechecking and Autocomplete</a></li></ol></li><li class="chapter-item "><a href="../../usage/known-issues.html"><strong aria-hidden="true">3.</strong> Known Issues</a></li><li class="chapter-item affix "><li class="part-title">Development</li><li class="chapter-item "><a href="../../development/tests.html"><strong aria-hidden="true">4.</strong> Tests</a></li><li class="chapter-item "><a href="../../development/debugging.html"><strong aria-hidden="true">5.</strong> Debugging</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -142,12 +142,15 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="accessing-godot-apis"><a class="header" href="#accessing-godot-apis">Accessing Godot APIs</a></h1>
-<p>The majority of builtin and <code>Object</code> classes are bound from Godot to Luau.
-A selection of utility functions from Godot are also available.</p>
-<p>To find out what APIs are exposed, you can refer to the <code>definitions/luauScriptTypes.gen.d.lua</code> file after building (beware: this file is large!)
-or rely on autocomplete to tell you (after setting that up).</p>
-<p>For the most part, you can refer to <a href="https://docs.godotengine.org/en/latest/">Godot's documentation</a> to discover the API.
-After learning the rules below, this should become relatively intuitive.</p>
+<p>The majority of builtin and <code>Object</code> classes are bound from Godot to Luau. A
+selection of utility functions from Godot are also available.</p>
+<p>To find out what APIs are exposed, you can refer to the
+<code>definitions/luauScriptTypes.gen.d.lua</code> file after building (beware: this file
+is large!) or rely on <a href="./typechecking-autocomplete.html">autocomplete</a> to tell you
+(after setting that up).</p>
+<p>For the most part, you can refer to <a href="https://docs.godotengine.org/en/latest/">Godot's documentation</a>
+to discover the API. After learning the rules below, this should become
+relatively intuitive.</p>
 <h2 id="renaming-rules"><a class="header" href="#renaming-rules">Renaming rules</a></h2>
 <p>Most members are renamed from their Godot names to the following convention:</p>
 <div class="table-wrapper"><table><thead><tr><th>Type</th><th>Godot Case</th><th>Luau Case</th></tr></thead><tbody>
@@ -159,8 +162,10 @@ After learning the rules below, this should become relatively intuitive.</p>
 <tr><td>Properties/signals</td><td><code>snake_case</code></td><td><code>camelCase</code></td></tr>
 </tbody></table>
 </div>
-<p>*: e.g. for the <code>PropertyUsage</code> enum, the prefix on all values is <code>PROPERTY_USAGE_</code>; this is removed.
-Additionally, if an enum name begins with a number after renaming (e.g. <code>KEY_9</code> with prefix <code>KEY_</code> -&gt; <code>9</code>), an <code>N</code> will be prepended to the name -&gt; <code>N9</code>.</p>
+<p>*: e.g. for the <code>PropertyUsage</code> enum, the prefix on all values is
+<code>PROPERTY_USAGE_</code>; this is removed. Additionally, if an enum name begins with a
+number after renaming (e.g. <code>KEY_9</code> with prefix <code>KEY_</code> -&gt; <code>9</code>), an <code>N</code> will be
+prepended to the name -&gt; <code>N9</code>.</p>
 <h2 id="accessible-apis"><a class="header" href="#accessible-apis">Accessible APIs</a></h2>
 <h3 id="globals"><a class="header" href="#globals">Globals</a></h3>
 <div class="table-wrapper"><table><thead><tr><th>Type</th><th>Godot Access</th><th>Luau Access</th><th>GDScript Example</th><th>Luau Example</th></tr></thead><tbody>
@@ -188,15 +193,27 @@ Additionally, if an enum name begins with a number after renaming (e.g. <code>KE
 <tr><td>Variant/Object to string</td><td><code>str(&lt;Instance&gt;)</code></td><td><code>tostring(&lt;Instance&gt;)</code></td><td></td><td></td></tr>
 </tbody></table>
 </div>
-<p>*: Variant type properties (e.g. <code>Vector2.x</code>) <strong>cannot be set</strong> because Luau does not support copy on assign (as C++ and GDScript do). You must construct a new object instead. <br />
-**: Iterators do not support modification during iteration. Doing so may cause errors or for items to be skipped. <br />
-***: Some Godot operators are not supported as they do not exist in Luau. Also, <code>==</code> comparison is not allowed between two different types in Luau, so these operators do not work.</p>
+<p>*: Variant type properties (e.g. <code>Vector2.x</code>) <strong>cannot be set</strong> because Luau
+does not support copy on assign (as C++ and GDScript do). You must construct a
+new object instead. <br />
+**: Iterators do not support modification during iteration. Doing so may cause
+errors or for items to be skipped. <br />
+***: Some Godot operators are not supported as they do not exist in Luau. Also,
+<code>==</code> comparison is not allowed between two different types in Luau, so these
+operators do not work.</p>
 <h3 id="odd-exceptions"><a class="header" href="#odd-exceptions">Odd exceptions</a></h3>
 <ul>
-<li>For security (permissions) reasons, the only supported <code>Callable</code> constructor is <code>Callable.new(object: Object, methodName: string | StringName)</code>.</li>
-<li><code>String</code>, <code>StringName</code>, and <code>NodePath</code> are not bound to Luau as Luau's builtin <code>string</code> suffices in the vast majority of cases. <code>StringName</code> and <code>NodePath</code> can be constructed manually if needed (e.g. if a <code>String</code> type would be inferred over the other two types) by using the <code>SN</code> or <code>NP</code> global functions respectively.
+<li>For security (permissions) reasons, the only supported <code>Callable</code> constructor
+is <code>Callable.new(object: Object, methodName: string | StringName)</code>.</li>
+<li><code>String</code>, <code>StringName</code>, and <code>NodePath</code> are not bound to Luau as Luau's builtin
+<code>string</code> suffices in the vast majority of cases. <code>StringName</code> and <code>NodePath</code>
+can be constructed manually if needed (e.g. if a <code>String</code> type would be
+inferred over the other two types) by using the <code>SN</code> or <code>NP</code> global functions
+respectively.
 <ul>
-<li>The intention with these constructors is to use them like a prefix you would find in other languages, e.g. <code>SN&quot;testStringName&quot;</code>. This is valid because of Lua's lenient parsing rules.</li>
+<li>The intention with these constructors is to use them like a prefix you would
+find in other languages, e.g. <code>SN&quot;testStringName&quot;</code>. This is valid because
+of Lua's lenient parsing rules.</li>
 </ul>
 </li>
 </ul>
@@ -209,7 +226,7 @@ Additionally, if an enum name begins with a number after renaming (e.g. <code>KE
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next" href="../../usage/writing-scripts/luau-script-api.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="../../usage/writing-scripts/class-registration.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -223,7 +240,7 @@ Additionally, if an enum name begins with a number after renaming (e.g. <code>KE
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next" href="../../usage/writing-scripts/luau-script-api.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="../../usage/writing-scripts/class-registration.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

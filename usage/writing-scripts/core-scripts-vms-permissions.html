@@ -80,7 +80,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item affix "><a href="../../introduction.html">Introduction</a></li><li class="chapter-item affix "><li class="part-title">Usage</li><li class="chapter-item "><a href="../../usage/building-and-installation.html"><strong aria-hidden="true">1.</strong> Building and Installation</a></li><li class="chapter-item expanded "><a href="../../usage/writing-scripts/index.html"><strong aria-hidden="true">2.</strong> Writing Scripts</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../usage/writing-scripts/accessing-godot.html"><strong aria-hidden="true">2.1.</strong> Accessing Godot APIs</a></li><li class="chapter-item "><div><strong aria-hidden="true">2.2.</strong> Godot Class Reference</div></li><li class="chapter-item "><a href="../../usage/writing-scripts/luau-script-api.html"><strong aria-hidden="true">2.3.</strong> godot-luau-script API Reference</a></li><li class="chapter-item "><a href="../../usage/writing-scripts/idiomatic-class.html"><strong aria-hidden="true">2.4.</strong> The "Idiomatic" Class</a></li><li class="chapter-item "><a href="../../usage/writing-scripts/virtual-methods.html"><strong aria-hidden="true">2.5.</strong> Virtual Methods</a></li><li class="chapter-item expanded "><a href="../../usage/writing-scripts/core-scripts-vms-permissions.html" class="active"><strong aria-hidden="true">2.6.</strong> "Core Scripts", VMs, and Permissions</a></li><li class="chapter-item "><a href="../../usage/writing-scripts/modules.html"><strong aria-hidden="true">2.7.</strong> Modules</a></li><li class="chapter-item "><a href="../../usage/writing-scripts/task-scheduler.html"><strong aria-hidden="true">2.8.</strong> The Task Scheduler</a></li><li class="chapter-item "><a href="../../usage/writing-scripts/typechecking-autocomplete.html"><strong aria-hidden="true">2.9.</strong> Typechecking and Autocomplete</a></li></ol></li><li class="chapter-item "><a href="../../usage/known-issues.html"><strong aria-hidden="true">3.</strong> Known Issues</a></li><li class="chapter-item affix "><li class="part-title">Development</li><li class="chapter-item "><a href="../../development/tests.html"><strong aria-hidden="true">4.</strong> Tests</a></li><li class="chapter-item "><a href="../../development/debugging.html"><strong aria-hidden="true">5.</strong> Debugging</a></li></ol>
+                <ol class="chapter"><li class="chapter-item affix "><a href="../../introduction.html">Introduction</a></li><li class="chapter-item affix "><li class="part-title">Usage</li><li class="chapter-item "><a href="../../usage/building-and-installation.html"><strong aria-hidden="true">1.</strong> Building and Installation</a></li><li class="chapter-item expanded "><a href="../../usage/writing-scripts/index.html"><strong aria-hidden="true">2.</strong> Writing Scripts</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../usage/writing-scripts/accessing-godot.html"><strong aria-hidden="true">2.1.</strong> Accessing Godot APIs</a></li><li class="chapter-item "><a href="../../usage/writing-scripts/class-registration.html"><strong aria-hidden="true">2.2.</strong> Class Registration</a></li><li class="chapter-item "><div><strong aria-hidden="true">2.3.</strong> Godot Class Reference</div></li><li class="chapter-item "><a href="../../usage/writing-scripts/luau-script-api.html"><strong aria-hidden="true">2.4.</strong> godot-luau-script API Reference</a></li><li class="chapter-item "><a href="../../usage/writing-scripts/idiomatic-class.html"><strong aria-hidden="true">2.5.</strong> The "Idiomatic" Class</a></li><li class="chapter-item "><a href="../../usage/writing-scripts/virtual-methods.html"><strong aria-hidden="true">2.6.</strong> Virtual Methods</a></li><li class="chapter-item expanded "><a href="../../usage/writing-scripts/core-scripts-vms-permissions.html" class="active"><strong aria-hidden="true">2.7.</strong> "Core Scripts", VMs, and Permissions</a></li><li class="chapter-item "><a href="../../usage/writing-scripts/modules.html"><strong aria-hidden="true">2.8.</strong> Modules</a></li><li class="chapter-item "><a href="../../usage/writing-scripts/task-scheduler.html"><strong aria-hidden="true">2.9.</strong> The Task Scheduler</a></li><li class="chapter-item "><a href="../../usage/writing-scripts/typechecking-autocomplete.html"><strong aria-hidden="true">2.10.</strong> Typechecking and Autocomplete</a></li></ol></li><li class="chapter-item "><a href="../../usage/known-issues.html"><strong aria-hidden="true">3.</strong> Known Issues</a></li><li class="chapter-item affix "><li class="part-title">Development</li><li class="chapter-item "><a href="../../development/tests.html"><strong aria-hidden="true">4.</strong> Tests</a></li><li class="chapter-item "><a href="../../development/debugging.html"><strong aria-hidden="true">5.</strong> Debugging</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -142,31 +142,40 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="core-scripts-vms-and-permissions"><a class="header" href="#core-scripts-vms-and-permissions">&quot;Core Scripts&quot;, VMs, and Permissions</a></h1>
-<p>These three concepts are essential to <code>godot-luau-script</code>'s sandboxing and security.</p>
+<p>These three concepts are essential to <code>godot-luau-script</code>'s sandboxing and
+security.</p>
 <h2 id="core-scripts"><a class="header" href="#core-scripts">&quot;Core Scripts&quot;</a></h2>
-<p>A core script is any script which is available in the filesystem whenever <code>godot-luau-script</code> is loaded.
-This means that any scripts part of a .pck file that was loaded after <code>godot-luau-script</code> should be declared non-core.</p>
+<p>A core script is any script which is available in the filesystem whenever
+<code>godot-luau-script</code> is loaded. This means that any scripts part of a .pck file
+that was loaded after <code>godot-luau-script</code> should be declared non-core.</p>
 <h2 id="vms"><a class="header" href="#vms">VMs</a></h2>
 <p><code>godot-luau-script</code> currently runs 3 different Luau VMs for different use cases:</p>
 <ol>
-<li>The loading VM, which is used to load essential script information (essentially, everything outside of its implementation table).</li>
+<li>The loading VM, which is used to load essential script information
+(essentially, everything outside of its implementation table).</li>
 <li>The core VM, which is where all core scripts are executed.</li>
 <li>The user VM, which is where all non-core scripts are executed.</li>
 </ol>
-<p>This provides a certain level of isolation and security in addition to thread sandboxing.</p>
+<p>This provides a certain level of isolation and security in addition to thread
+sandboxing.</p>
 <h3 id="method-calls"><a class="header" href="#method-calls">Method calls</a></h3>
-<p>Within the same VM, any script can call any other script's methods, so long as they are defined in the implementation table.
-Between VMs, scripts can only call other scripts' methods if they are registered to Godot.
-This gives a rough notion of &quot;public&quot; and &quot;private&quot;.</p>
+<p>Within the same VM, any script can call any other script's methods, so long as
+they are defined in the implementation table. Between VMs, scripts can only call
+other scripts' methods if they are registered to Godot. This gives a rough
+notion of &quot;public&quot; and &quot;private&quot;.</p>
 <h2 id="permissions"><a class="header" href="#permissions">Permissions</a></h2>
-<p>As mentioned in the introduction, <code>godot-luau-script</code> was primarily created to load untrusted scripts safely.
-This means that certain Godot APIs must be locked behind special permissions, and that scripts will need to declare these permissions to receive them.</p>
-<p>The specific permission levels are listed in <code>definitions/luauLibTypes.part.d.lua</code> and in the <code>godot-luau-script</code> API Reference.
-As noted there, only a core script can declare its own permissions.</p>
+<p>As mentioned in the introduction, <code>godot-luau-script</code> was primarily created to
+load untrusted scripts safely. This means that certain Godot APIs must be locked
+behind special permissions, and that scripts will need to declare these
+permissions to receive them.</p>
+<p>The specific permission levels are listed <a href="./class-registration.html">here</a>. As
+noted there, only a core script can declare its own permissions.</p>
 <p>Certain APIs receive special perimssions, with <code>INTERNAL</code> being the default.
 Permissions are set on the thread level, and are inherited to child threads.
-If a thread ever tries to execute a method or other code of a permission level it does not have, it will cause an error.</p>
-<p>A comprehensive list of the permissions assigned to every Object class and method can be seen at <code>bindgen/class_permissions.toml</code>.</p>
+If a thread ever tries to execute a method or other code of a permission level
+it does not have, it will cause an error.</p>
+<p>A comprehensive list of the permissions assigned to every Object class and
+method can be seen at <code>bindgen/class_settings.toml</code>.</p>
 
                     </main>
 

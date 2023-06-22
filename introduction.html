@@ -80,7 +80,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item affix "><a href="introduction.html" class="active">Introduction</a></li><li class="chapter-item affix "><li class="part-title">Usage</li><li class="chapter-item "><a href="usage/building-and-installation.html"><strong aria-hidden="true">1.</strong> Building and Installation</a></li><li class="chapter-item "><a href="usage/writing-scripts/index.html"><strong aria-hidden="true">2.</strong> Writing Scripts</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="usage/writing-scripts/accessing-godot.html"><strong aria-hidden="true">2.1.</strong> Accessing Godot APIs</a></li><li class="chapter-item "><div><strong aria-hidden="true">2.2.</strong> Godot Class Reference</div></li><li class="chapter-item "><a href="usage/writing-scripts/luau-script-api.html"><strong aria-hidden="true">2.3.</strong> godot-luau-script API Reference</a></li><li class="chapter-item "><a href="usage/writing-scripts/idiomatic-class.html"><strong aria-hidden="true">2.4.</strong> The "Idiomatic" Class</a></li><li class="chapter-item "><a href="usage/writing-scripts/virtual-methods.html"><strong aria-hidden="true">2.5.</strong> Virtual Methods</a></li><li class="chapter-item "><a href="usage/writing-scripts/core-scripts-vms-permissions.html"><strong aria-hidden="true">2.6.</strong> "Core Scripts", VMs, and Permissions</a></li><li class="chapter-item "><a href="usage/writing-scripts/modules.html"><strong aria-hidden="true">2.7.</strong> Modules</a></li><li class="chapter-item "><a href="usage/writing-scripts/task-scheduler.html"><strong aria-hidden="true">2.8.</strong> The Task Scheduler</a></li><li class="chapter-item "><a href="usage/writing-scripts/typechecking-autocomplete.html"><strong aria-hidden="true">2.9.</strong> Typechecking and Autocomplete</a></li></ol></li><li class="chapter-item "><a href="usage/known-issues.html"><strong aria-hidden="true">3.</strong> Known Issues</a></li><li class="chapter-item affix "><li class="part-title">Development</li><li class="chapter-item "><a href="development/tests.html"><strong aria-hidden="true">4.</strong> Tests</a></li><li class="chapter-item "><a href="development/debugging.html"><strong aria-hidden="true">5.</strong> Debugging</a></li></ol>
+                <ol class="chapter"><li class="chapter-item affix "><a href="introduction.html" class="active">Introduction</a></li><li class="chapter-item affix "><li class="part-title">Usage</li><li class="chapter-item "><a href="usage/building-and-installation.html"><strong aria-hidden="true">1.</strong> Building and Installation</a></li><li class="chapter-item "><a href="usage/writing-scripts/index.html"><strong aria-hidden="true">2.</strong> Writing Scripts</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="usage/writing-scripts/accessing-godot.html"><strong aria-hidden="true">2.1.</strong> Accessing Godot APIs</a></li><li class="chapter-item "><a href="usage/writing-scripts/class-registration.html"><strong aria-hidden="true">2.2.</strong> Class Registration</a></li><li class="chapter-item "><div><strong aria-hidden="true">2.3.</strong> Godot Class Reference</div></li><li class="chapter-item "><a href="usage/writing-scripts/luau-script-api.html"><strong aria-hidden="true">2.4.</strong> godot-luau-script API Reference</a></li><li class="chapter-item "><a href="usage/writing-scripts/idiomatic-class.html"><strong aria-hidden="true">2.5.</strong> The "Idiomatic" Class</a></li><li class="chapter-item "><a href="usage/writing-scripts/virtual-methods.html"><strong aria-hidden="true">2.6.</strong> Virtual Methods</a></li><li class="chapter-item "><a href="usage/writing-scripts/core-scripts-vms-permissions.html"><strong aria-hidden="true">2.7.</strong> "Core Scripts", VMs, and Permissions</a></li><li class="chapter-item "><a href="usage/writing-scripts/modules.html"><strong aria-hidden="true">2.8.</strong> Modules</a></li><li class="chapter-item "><a href="usage/writing-scripts/task-scheduler.html"><strong aria-hidden="true">2.9.</strong> The Task Scheduler</a></li><li class="chapter-item "><a href="usage/writing-scripts/typechecking-autocomplete.html"><strong aria-hidden="true">2.10.</strong> Typechecking and Autocomplete</a></li></ol></li><li class="chapter-item "><a href="usage/known-issues.html"><strong aria-hidden="true">3.</strong> Known Issues</a></li><li class="chapter-item affix "><li class="part-title">Development</li><li class="chapter-item "><a href="development/tests.html"><strong aria-hidden="true">4.</strong> Tests</a></li><li class="chapter-item "><a href="development/debugging.html"><strong aria-hidden="true">5.</strong> Debugging</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -142,30 +142,41 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
-<p><code>godot-luau-script</code> is a GDExtension adding support for Roblox's <a href="https://luau-lang.org/">Luau</a>, a superset of Lua 5.1, to Godot 4.</p>
-<p>It is developed mostly with <a href="https://github.com/Fumohouse/Fumohouse">Fumohouse</a> in mind, but it can be used in other projects.</p>
+<p><code>godot-luau-script</code> is a GDExtension adding support for Roblox's
+<a href="https://luau-lang.org/">Luau</a>, a superset of Lua 5.1, to Godot 4.</p>
+<p>It is developed mostly with <a href="https://github.com/Fumohouse/Fumohouse">Fumohouse</a>
+in mind, but it can be used in other projects.</p>
 <h2 id="priorities"><a class="header" href="#priorities">Priorities</a></h2>
 <p>This particular implementation has a few specific goals:</p>
 <ul>
-<li>Allow for (relatively) safe loading of user-generated content (UGC) including scripts
+<li>Allow for (relatively) safe loading of user-generated content (UGC) including
+scripts
 <ul>
 <li>Sandbox &quot;core&quot; and &quot;user&quot; scripts from each other (separate Lua VMs)</li>
-<li>Enforce permission levels for restricted APIs (like networking or filesystem access)</li>
+<li>Enforce permission levels for restricted APIs (like networking or filesystem
+access)</li>
 <li>Limit breakage of the game by user scripts</li>
 </ul>
 </li>
 <li>Support typechecking of source files</li>
 </ul>
 <p>Note that <code>godot-luau-script</code> was specifically built for loading untrusted UGC.
-As such, other languages like GDScript may be more suitable if UGC support is not needed
-(that is, unless you are partial to Luau as a language).</p>
+As such, other languages like GDScript may be more suitable if UGC support is
+not needed (that is, unless you are partial to Luau as a language).</p>
 <h2 id="disclaimer"><a class="header" href="#disclaimer">Disclaimer</a></h2>
 <p>This project is still in relatively early stages. Please keep in mind:</p>
 <ul>
-<li><strong>(Potentially major) breaking changes will happen often and whenever necessary.</strong></li>
-<li>This documentation may be incomplete or out-of-date. Please <a href="https://github.com/Fumohouse/godot-luau-script/issues/new/choose">report an issue</a> if this is the case.</li>
-<li>Building on any platform except for MSVC on Windows and LLVM on Linux is untested. Report an issue if you encounter issues building.</li>
-<li>Some editor functionality is still not implemented (mostly debugging, profiling, and analysis/autocomplete support) and won't be for some time.</li>
+<li><strong>(Potentially major) breaking changes will happen often and whenever
+necessary.</strong></li>
+<li>This project will usually track the latest Godot version (including preview
+releases), and support for older versions is not planned.</li>
+<li>This documentation may be incomplete or out-of-date. Please
+<a href="https://github.com/Fumohouse/godot-luau-script/issues/new/choose">report an issue</a>
+if this is the case.</li>
+<li>Building on any platform except for MSVC on Windows and LLVM on Linux is
+untested. Report an issue if you encounter issues building.</li>
+<li>Some editor functionality is still not implemented (mostly debugging,
+profiling, and analysis/autocomplete support) and won't be for some time.</li>
 <li>Some security issues may remain.</li>
 </ul>
 
