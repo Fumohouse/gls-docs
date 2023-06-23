@@ -463,7 +463,7 @@ getter exists.</p>
 <p>The <code>@set</code> and <code>@get</code> annotations register a property's setter and getter,
 respectively. The supplied method name should be a method on this class
 registered to Godot.</p>
-<h5 id="range-min-max-step"><a class="header" href="#range-min-max-step"><code>@range &lt;min&gt; &lt;max&gt; [step]</code></a></h5>
+<h5 id="range-min-max-step-orgreaterorlesshidesliderradiansdegreesexpsuffixsuffix"><a class="header" href="#range-min-max-step-orgreaterorlesshidesliderradiansdegreesexpsuffixsuffix"><code>@range &lt;min&gt; &lt;max&gt; [step] [...'orGreater'|'orLess'|'hideSlider'|'radians'|'degrees'|'exp'|'suffix:'&lt;suffix&gt;]</code></a></h5>
 <p>The <code>@range</code> annotation, valid only for <code>integer</code> and <code>number</code> properties,
 defines the range (and optional step) for a numeric value in the Godot editor.</p>
 <p>Do not use decimals (including <code>.0</code>) for <code>integer</code> properties.</p>
@@ -562,12 +562,19 @@ registers a constant value with Godot.</p>
 <p><code>godot-luau-script</code> does its best to determine the proper Godot type from Luau
 type annotations. However, it may fail under some circumstances. Here are a few
 things to note:</p>
+<h3 id="nullable--or--nil-types"><a class="header" href="#nullable--or--nil-types">Nullable (<code>?</code> or <code>| nil</code>) types</a></h3>
+<p>When annotating a method argument with a nullable type, the argument will be
+registered to Godot as non-nullable (i.e. <code>number?</code> -&gt; <code>FLOAT</code>). If you want to
+have the argument be optional on the Godot side,
+<a href="usage/writing-scripts/class-registration.html#defaultargs-array">register default arguments</a>.</p>
+<p>When annotating anything else (properties, return types, etc.), using a nullable
+type will cause the type to be registered with Godot as <code>Variant</code> unless the
+type extends <code>Object</code>. This is because the only Godot type that accepts both
+a value and <code>null</code> is <code>Variant</code>. If you encounter this, it's recommended to
+reimplement your logic such that using a nullable is not necessary.</p>
+<h3 id="other-potential-issues"><a class="header" href="#other-potential-issues">Other potential issues</a></h3>
 <ul>
 <li>Aliasing Godot types (e.g. <code>type D = Dictionary</code>) is not currently supported.</li>
-<li>Using the <code>?</code> syntax (e.g. <code>number?</code>) will tell Godot that any <code>Variant</code> type
-is acceptable. This is because the only Godot type that accepts a value and
-<code>null</code> is <code>Variant</code>. As such, it's recommended to implement your methods such
-that this is not necessary.</li>
 </ul>
 <h2 id="special-types"><a class="header" href="#special-types">Special types</a></h2>
 <h3 id="typedarrayt"><a class="header" href="#typedarrayt"><code>TypedArray&lt;T&gt;</code></a></h3>
