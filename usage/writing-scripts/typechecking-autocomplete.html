@@ -157,11 +157,12 @@ following setup:</p>
 being loaded by default.</li>
 <li>Set the preference <code>luau-lsp.types.definitionFiles</code> to an array containing the
 path to <code>definitions/luauScriptTypes.gen.d.lua</code>.</li>
-<li>Set the FFlag <code>LuauRecursionLimit</code> to something higher than the default (e.g.
-5000). This can be done through the <code>luau-lsp.fflags.override</code> preference.
+<li>Set the FFlags <code>LuauRecursionLimit</code> and <code>LuauTarjanChildLimit</code> to something
+higher than the defaults (e.g. 5000 and 20000 respectively). This can be done
+through the <code>luau-lsp.fflags.override</code> preference.
 <ul>
-<li>This is necessary because the generated definition file is too large for
-Luau to parse by default.</li>
+<li>This is necessary because the generated definition file is too large and
+complex for Luau to parse by default.</li>
 </ul>
 </li>
 </ul>

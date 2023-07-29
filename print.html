@@ -181,9 +181,11 @@ profiling, and analysis/autocomplete support) and won't be for some time.</li>
 <li>Some security issues may remain.</li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="building-and-installation"><a class="header" href="#building-and-installation">Building and Installation</a></h1>
+<p>Prebuilt binaries can be found on the <a href="https://github.com/Fumohouse/godot-luau-script/releases">releases page</a>.</p>
+<p>If you would like to build this project yourself, instructions are provided
+below.</p>
 <h2 id="building"><a class="header" href="#building">Building</a></h2>
-<p><code>godot-luau-script</code> uses <a href="https://scons.org/">SConstruct</a> to build. Currently,
-no prebuilt binaries are provided.</p>
+<p><code>godot-luau-script</code> uses <a href="https://scons.org/">SConstruct</a> to build.</p>
 <h3 id="cloning"><a class="header" href="#cloning">Cloning</a></h3>
 <p>The three dependencies this project has, godot-cpp, Luau, and Catch2, are added
 as submodules in <code>extern/</code>. As such, make sure to clone submodules when cloning
@@ -198,7 +200,7 @@ symbolic links are not supported on Windows. If you want to run tests, you will
 need to copy the folder (including built binaries) yourself.</p>
 <h3 id="supported-platforms"><a class="header" href="#supported-platforms">Supported platforms</a></h3>
 <p><code>godot-luau-script</code> officially supports compilation using recent versions of
-Clang, GCC, and MSVC, and building for Windows, macOS, and Linux. LLVM
+Clang, GCC, MinGW, and MSVC, and building for Windows, macOS, and Linux. LLVM
 (<code>clang++</code>, <code>clangd</code>, <code>clang-format</code>) utilities are preferred where possible.</p>
 <h3 id="building-1"><a class="header" href="#building-1">Building</a></h3>
 <p>Ensure that a supported toolchain is installed. You will also need to install
@@ -232,6 +234,24 @@ files are provided in <code>bin/</code>; it should suffice to copy the entire fo
 your Godot project. After reloading the project, the extension should be loaded
 and you should be able to create a Luau script through the script creation
 dialog.</p>
+<h2 id="build-containers"><a class="header" href="#build-containers">Build containers</a></h2>
+<p><code>podman</code> build containers are provided in <code>build_containers/</code> for reproducible
+build environments on Linux, Windows, and macOS.</p>
+<h3 id="usage"><a class="header" href="#usage">Usage</a></h3>
+<p>Scripts should not be run outside the directory they are in.</p>
+<ol>
+<li>Ensure <code>podman</code> is installed</li>
+<li>Build images with <code>build_images.sh</code></li>
+<li>Build the project with <code>build_gls.sh</code> - use arguments <code>linux</code>, <code>windows</code>, and
+<code>macos</code> to select which platform(s) to build</li>
+</ol>
+<h3 id="preparing-osxcross"><a class="header" href="#preparing-osxcross">Preparing <code>osxcross</code></a></h3>
+<p>See <a href="https://github.com/tpoechtrager/osxcross/tree/master">tpoechtrager/osxcross</a>.</p>
+<p>Place the SDK (expected name: <code>MacOSX13.3.sdk.tar.xz</code>) in .tar.xz format into
+<code>build_containers/files/</code>.</p>
+<p>Some workarounds may be required for the scripts to function on recent Xcode
+versions (see <a href="https://github.com/tpoechtrager/osxcross/issues/383#issuecomment-1580487598">this issue comment</a>).</p>
+<p>Build was tested on Xcode 14.3.1 (SDK: macOS 13.3).</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="writing-scripts"><a class="header" href="#writing-scripts">Writing Scripts</a></h1>
 <p>Since <code>godot-luau-script</code> supports most of Godot's script language
 functionality, you should be able to accomplish the same things as you could
@@ -819,11 +839,12 @@ following setup:</p>
 being loaded by default.</li>
 <li>Set the preference <code>luau-lsp.types.definitionFiles</code> to an array containing the
 path to <code>definitions/luauScriptTypes.gen.d.lua</code>.</li>
-<li>Set the FFlag <code>LuauRecursionLimit</code> to something higher than the default (e.g.
-5000). This can be done through the <code>luau-lsp.fflags.override</code> preference.
+<li>Set the FFlags <code>LuauRecursionLimit</code> and <code>LuauTarjanChildLimit</code> to something
+higher than the defaults (e.g. 5000 and 20000 respectively). This can be done
+through the <code>luau-lsp.fflags.override</code> preference.
 <ul>
-<li>This is necessary because the generated definition file is too large for
-Luau to parse by default.</li>
+<li>This is necessary because the generated definition file is too large and
+complex for Luau to parse by default.</li>
 </ul>
 </li>
 </ul>
